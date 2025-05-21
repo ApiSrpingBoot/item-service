@@ -15,7 +15,7 @@ import feign.FeignException;
 @Service
 public class ItemServiceFeing implements ItemService {
 
-
+    //declaramos el cliente con openfeign 
     private ProductFeignClient client;
 
     public ItemServiceFeing(ProductFeignClient client) {
@@ -24,6 +24,7 @@ public class ItemServiceFeing implements ItemService {
 
     @Override
     public List<Item> findAll() {
+        //nos debuelve lista de productos y lo cambiamos a lista de items, la cantidad nos devuelve un random entre 1 y 10
         return client.findAll()
             .stream()
             .map(product -> new Item(product,new Random().nextInt(10)+1))
@@ -32,6 +33,7 @@ public class ItemServiceFeing implements ItemService {
 
     @Override
     public Optional<Item> findById(Long id) {
+        //nos debuelve un producto y lo cambiamos a item, la cantidad nos devuelve un random entre 1 y 10
         try {
             Product product = client.getDetails(id);
             return Optional.ofNullable(new Item(product, new Random().nextInt(10)+1));

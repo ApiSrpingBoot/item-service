@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 @RestController
 public class ItemController {
 
+    //usara el service por defecto como solo exite uno usa openfeign
     private final ItemService service;
 
     public ItemController(ItemService service) {
