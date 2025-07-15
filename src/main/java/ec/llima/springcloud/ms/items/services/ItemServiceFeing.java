@@ -18,6 +18,7 @@ public class ItemServiceFeing implements ItemService {
     //declaramos el cliente con openfeign 
     private ProductFeignClient client;
 
+    //se puede iyectar con constructor o autowired
     public ItemServiceFeing(ProductFeignClient client) {
         this.client = client;
     }

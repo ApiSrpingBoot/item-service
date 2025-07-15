@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,9 +19,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class ItemController {
 
     //usara el service por defecto como solo exite uno usa openfeign
+    //luego cuando agregados el web cliente 
     private final ItemService service;
 
-    public ItemController(ItemService service) {
+    // si no uso @Primary en una de las implementaciones debo usar @Qualifier("itemServiceWebClient") indicndo cual deseo usar
+    public ItemController(@Qualifier("itemServiceWebClient") ItemService service) {
         this.service = service;
     }
 
