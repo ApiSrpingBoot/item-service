@@ -17,7 +17,7 @@ public class WebClientConfig {
     private String url;
 
     @Bean
-    @LoadBalanced
+    @LoadBalanced //si se va a usar kubertnetes este ya no seria necesario
     WebClient.Builder weBuilder(){
         return WebClient.builder()
         //.baseUrl("http://products"); //puedo poner la base url para no ponderla luego en cada servicio en ItemServiceWebClient
