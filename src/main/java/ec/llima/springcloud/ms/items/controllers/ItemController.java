@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
@@ -28,7 +30,14 @@ public class ItemController {
     }
 
     @GetMapping("/lista")
-    public List<Item> getList() {
+    public List<Item> getList(@RequestParam(name = "AuthorizationName", required = false) String nombre,
+    @RequestHeader(name = "Authorization-request", required = false) String token) {
+        //con esto imprimimos los headers que nos llegan
+        // estos los aplicamos en el gateway
+        //con los filtros que tiene por defecto Spring Cloud Gateway
+        // estos filtros se aplicaron solo en el yml
+        System.err.println("AuthorizationName: " + nombre);
+        System.err.println("Authorization-request: " + token);
         return this.service.findAll();
     }
 

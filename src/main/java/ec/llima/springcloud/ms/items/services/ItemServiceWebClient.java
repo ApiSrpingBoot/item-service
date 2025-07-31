@@ -35,7 +35,7 @@ public class ItemServiceWebClient implements ItemService{
         return this.client.build()
         .get()
         //.uri("http://products/api/lista").accept(MediaType.APPLICATION_JSON) //se usa produc porque con la configuracion del .properties va a tomar cualquiera de los dos para hacer el balnaceo de carga
-        .uri("/api/lista").accept(MediaType.APPLICATION_JSON) //la base url ya esta definifa en WebClient
+        .uri("/api/list").accept(MediaType.APPLICATION_JSON) //la base url ya esta definifa en WebClient
         .retrieve()
         .bodyToFlux(Product.class)
         .map(product -> new Item(product,new Random().nextInt(10)+1))
