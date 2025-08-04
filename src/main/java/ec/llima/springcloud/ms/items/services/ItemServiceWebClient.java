@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 
-import org.springframework.context.annotation.Primary;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -15,7 +14,6 @@ import org.springframework.web.reactive.function.client.WebClient.Builder;
 
 import ec.llima.springcloud.ms.items.models.Item;
 import ec.llima.springcloud.ms.items.models.Product;
-import feign.FeignException;
 //se puede poner @ Prymary para definir que este es el que se va a usar ya que hay 2 implementaciones de ItemService
 // @Primary
 @Service
@@ -60,6 +58,48 @@ public class ItemServiceWebClient implements ItemService{
             return Optional.empty();
         }
         
+    }
+
+    @Override
+    public Product save(Product product) {
+        return this.client.build()
+        .post()
+        //.uri("http://products/api/save").accept(MediaType.APPLICATION_JSON)
+        .uri("/api/save").accept(MediaType.APPLICATION_JSON) //la base url ya esta definifa en WebClient
+        .contentType(MediaType.APPLICATION_JSON)
+        .bodyValue(product)
+        .retrieve()
+        .bodyToMono(Product.class)
+        .block();
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        Map<String, Long> params = new HashMap<>();
+        params.put("id", id);
+
+        client.build().delete()
+        //.uri("http://products/api/delete/{id}", id)
+        .uri("/api/{id}", params) //la base url ya esta definifa en WebClient
+        .retrieve()
+        .bodyToMono(Void.class)
+        .block();
+    }
+
+    @Override
+    public Product update(Product product, Long id) {
+        Map<String, Long> params = new HashMap<>();
+        params.put("id", id);
+        return this.client.build()
+        .put()
+        //.uri("http://products/api/save").accept(MediaType.APPLICATION_JSON)
+        .uri("/api/update/{id}",params)
+        .accept(MediaType.APPLICATION_JSON) //la base url ya esta definifa en WebClient
+        .contentType(MediaType.APPLICATION_JSON)
+        .bodyValue(product)
+        .retrieve()
+        .bodyToMono(Product.class)
+        .block();
     }
 
 }

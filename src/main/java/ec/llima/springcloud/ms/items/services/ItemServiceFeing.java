@@ -43,5 +43,22 @@ public class ItemServiceFeing implements ItemService {
         }        
     }
 
+    @Override
+    public Product save(Product product) {
+        client.save(product);
+        return product; //en este caso no se hace nada con el producto, solo se guarda
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        client.deleteById(id);
+    }
+
+    @Override
+    public Product update(Product product, Long id) {
+        client.update(product, id);
+        return product; //en este caso no se hace nada con el producto, solo se actualiza
+    }
+
     
 }
